@@ -1,6 +1,7 @@
 public class Animal {
     private int id;
     private String name;
+    public final static String DATABASE_TYPE = "Animal";
 
     public Animal(String name) {
 
