@@ -13,7 +13,12 @@ public class App {
         get("/",(request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("greeting", "hello");
-            return new ModelAndView(model,"layout.hbs");
+            return new ModelAndView(model,"index.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/animals", (req,res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "animals.hbs");
         }, new HandlebarsTemplateEngine());
 
     }
