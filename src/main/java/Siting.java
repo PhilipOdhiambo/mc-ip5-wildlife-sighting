@@ -7,7 +7,10 @@ public class Siting {
     private String location;
     private String ranger;
 
-    Siting(int id, int animalId, String location, String ranger){
+    Siting(int animalId, String location, String ranger){
+        setAnimalId(animalId);
+        setLocation(location);
+        setRanger(ranger);
 
     }
 
@@ -61,30 +64,27 @@ public class Siting {
 
     }
 
-    // Create/save an animal into the database
+    // Create/save siting into the database
     public void save(){
-        String sql = "INSERT INTO animals (name, type) VALUES (:name, :type)";
+        String sql = "INSERT INTO sitings (animalId, location, ranger) VALUES (:animalId, :location, :ranger)";
         try(Connection conn = DB.sql2o.open()){
             this.id = (int) conn.createQuery(sql)
-                    .addParameter("name",this.name)
-                    .addParameter("type", DATABASE_TYPE)
+                    .addParameter("animalId",this.animalId)
+                    .addParameter("location", this.location)
+                    .addParameter("ranger",this.ranger)
                     .executeUpdate().getKey();
-
         }
 
     }
 
-    public Animal findONe(int id) {
+    public Siting findONe(int id) {
         try (Connection con = DB.sql2o.open()) {
-            String sql = "SELECT * FROM animals where id=:id";
-            Animal animal = con.createQuery(sql)
+            String sql = "SELECT * FROM sitings where id=:id";
+            Siting siting = con.createQuery(sql)
                     .addParameter("id", id)
-                    .throwOnMappingFailure(false)
-                    .executeAndFetchFirst(Animal.class);
-            return animal;
+                    .executeAndFetchFirst(Siting.class);
+            return siting;
         }
     }
-
-
 
 }

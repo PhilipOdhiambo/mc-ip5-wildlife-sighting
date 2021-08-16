@@ -10,7 +10,7 @@ class EndangeredAnimalTest extends DatabaseRule {
         Assertions.assertTrue(testAnimal instanceof EndangeredAnimal);
     }
     @Test
-    public void name_savedCorrectly_name(){
+    public void name_propertyInitializedCorrectly_name(){
         EndangeredAnimal testAnimal = new EndangeredAnimal("Rhino",EndangeredAnimal.YOUNG,EndangeredAnimal.ILL);
         Assertions.assertEquals("Rhino",testAnimal.getName());
     }
