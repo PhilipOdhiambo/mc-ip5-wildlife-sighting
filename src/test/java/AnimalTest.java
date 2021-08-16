@@ -22,11 +22,6 @@ class AnimalTest extends  DatabaseRule {
         int animalId = animal.getId();
         Assertions.assertEquals(animal, animal.findONe(animalId));
     }
-
-
-
-
-
     // Helper function
     public Animal getTestAnimal() {
         return new Animal("testAnimal");
