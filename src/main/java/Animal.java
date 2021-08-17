@@ -63,6 +63,13 @@ public class Animal {
 
     }
 
+    public static void delete(int id){
+        String sql = "DELETE FROM animals WHERE id = :id";
+        try(Connection conn = DB.sql2o.open()) {
+            conn.createQuery(sql).addParameter("id",id).executeUpdate();
+        }
+    }
+
     public static List<Animal> all () {
         try (Connection con = DB.sql2o.open()) {
             String sql = "SELECT * FROM animals";

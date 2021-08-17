@@ -34,7 +34,9 @@ public class Main {
         }, new HandlebarsTemplateEngine());
 
         get("/animals", (req,res) -> {
+            List<Animal> animals = Animal.all();
             Map<String, Object> model = new HashMap<>();
+            model.put("animals", animals);
             return new ModelAndView(model, "animals.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -51,6 +53,14 @@ public class Main {
             return null;
         });
 
+        // Delete animal
+        get("/animals-delete/:id",(req,res)-> {
+            int id = Integer.parseInt( req.params(":id"));
+            Animal.delete(id);
+            res.redirect("/animals");
+            return null;
+        });
+
         // Save new sighting
         post("/add-sighting",(req,res) -> {
             System.out.println(req.queryParams("ranger"));
@@ -58,6 +68,7 @@ public class Main {
             res.redirect("/");
             return null;
         });
+
 
     }
 }
