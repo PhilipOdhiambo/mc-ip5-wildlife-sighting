@@ -1,15 +1,18 @@
 
+import org.sql2o.Sql2o;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static spark.Spark.*;
+
 public class Main {
     public static void main(String[] args) {
 
+        port(DB.getPortNumber());
+
+        staticFileLocation("/public");
 
         get("/",(request, response) -> {
             List<Animal> animals = Animal.all();
