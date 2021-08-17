@@ -9,6 +9,18 @@ import static spark.Spark.*;
 
 public class Main {
     public static void main(String[] args) {
+        // Database connection
+        int portNumber = DatabaseConnection.getPortNumber();
+        port(portNumber);
+        String host = DatabaseConnection.getDbHost();
+        String user = DatabaseConnection.getUserName();
+        String password = DatabaseConnection.getUserPass();
+
+        staticFileLocation("/public");
+
+
+        Sql2o sql2o = new Sql2o("jdbc:postgresql://" + host + ":5432/wildlife_tracker",user,password);
+
 
         port(DB.getPortNumber());
 

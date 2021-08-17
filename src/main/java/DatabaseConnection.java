@@ -1,7 +1,6 @@
-
 import org.sql2o.Sql2o;
 
-public class DB {
+public class DatabaseConnection {
 
     public static Sql2o sql2o;
     public static String host;
@@ -9,10 +8,7 @@ public class DB {
     public static String password;
 
     public static int getPortNumber() {
-
         ProcessBuilder processBuilder = new ProcessBuilder();
-
-
         if (processBuilder.environment().get("PORT") != null) {
             // Heroku connection
             host = "ec2-54-205-232-84.compute-1.amazonaws.com";
@@ -20,7 +16,7 @@ public class DB {
             password = "bd9be143a2056efa51b7a9f9546478d783667151515a126be2b01d294aa50a9a";
 
             sql2o = new Sql2o("jdbc:postgresql://" + host + ":5432/dbdiho906h1ffa",userName,password);
-
+            ;
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
 
@@ -33,6 +29,16 @@ public class DB {
         return 4567;
     }
 
+
+    public static String getUserName() {
+        return userName;
+    }
+
+    public static String getUserPass() {
+        return userName;
+    }
+
+    public static String getDbHost() {
+        return host;
+    }
 }
-
-
