@@ -15,16 +15,23 @@
 
     <section>
         <div class="row container">
-            <div class="col-md-5">
+            <div class="col-md-1"></div>
 
-                <h2>Track an animal</h2>
+            <div class="col-md-6">
+                <form action="/add-sighting" method="POST">
+
+                      <h2>Track an animal</h2>
+
+
+                      {{!-- id to be set by jquery when clicked on option --}}
+                      <input id="sighted-animal" hidden type="number">
 
                 <label class="form-label" for="name-sited">Animal sighted: </label>
                 <select class="form-control" name="animal" id="name-sited">
-                    <option value="endangered"> White Rhino</option>
-                    <option value="endangered"> Elephant</option>
+                    {{#each animals}}
+                     <option id="ii" value="{{isendagered}}"> {{name}}</option>
+                    {{/each}}                   
                 </select>
-
                 <div class="endangrered">
 
                     <p>Please give more details for the endangered animal</p>
@@ -36,27 +43,33 @@
                         <option value="fine">OK</option>
                     </select>
 
-                    <label for="age">Age category</label>
-                    <select name="age" id="age">
+                    <label class="form-label" for="age">Age category</label>
+                    <select class="form-control" name="age" id="age">
                         <option value="sick">Newborn</option>
                         <option value="healthy">Young</option>
                         <option value="fine">Adult</option>
                     </select>
                 </div>
 
-                <label for="location">Enter Zone</label>
-                <select name="location" id="location">
+                <label class="form-label" for="location">Enter Zone</label>
+                <select class="form-control" name="location" id="location">
                     <option value="zone A">Zone A</option>
                     <option value="zone A">Zone b</option>
                     <option value="zone A">Zone c</option>
                 </select>
 
-                <label for="ranger">Name of the Ranger</label>
-                <select name="ranger" id="ranger">
+                <label class="form-label" for="ranger">Name of the Ranger</label>
+                <select class="form-control" name="ranger" id="ranger">
                     <option value="pater">Peter</option>
                     <option value="joan">Joan</option>
                     <option value="robert">Robert</option>
                 </select>
+
+                <button class="btn btn-success form-control">Submit</button>
+
+                </form>         
+
+                
 
             </div>
 
@@ -67,21 +80,22 @@
                 <p>Fully grown</p>
 
             </div>
+            <div class="col-md-1"></div>
 
         </div>
     </section>
-
-
-
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
         crossorigin="anonymous"></script>
 
     <script>
-        $(document).ready(function () {
-
+        $(document).ready(function() {
+            $("#name-sited").change(function() {
+                $(".endangrered").toggle(this.value);
+            });
         })
+     
 
     </script>
 </body>

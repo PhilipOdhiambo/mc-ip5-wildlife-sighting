@@ -1,13 +1,24 @@
 import com.google.common.base.Objects;
 import org.sql2o.Connection;
 
+import java.util.List;
+
 public class Animal {
     private int id;
     private String name;
-    public final static String DATABASE_TYPE = "Animal";
+    private Boolean isendagered;
 
-    public Animal(String name) {
+    public Boolean getIsendagered() {
+        return isendagered;
+    }
+
+    public void setIsendagered(Boolean isendagered) {
+        this.isendagered = isendagered;
+    }
+
+    public Animal(String name, Boolean endangered) {
         setName(name);
+        setIsendagered(endangered);
 
     }
 
@@ -42,15 +53,23 @@ public class Animal {
 
     // Create/save an animal into the database
     public void save(){
-        String sql = "INSERT INTO animals (name, type) VALUES (:name, :type)";
+        String sql = "INSERT INTO animals (name, isendagered) VALUES (:name, :isendagered)";
         try(Connection conn = DB.sql2o.open()){
             this.id = (int) conn.createQuery(sql)
                     .addParameter("name",this.name)
-                    .addParameter("type", DATABASE_TYPE)
+                    .addParameter("isendagered", this.isendagered)
                     .executeUpdate().getKey();
-
         }
 
+    }
+
+    public static List<Animal> all () {
+        try (Connection con = DB.sql2o.open()) {
+            String sql = "SELECT * FROM animals";
+            return con.createQuery(sql)
+                    .throwOnMappingFailure(false)
+                    .executeAndFetch(Animal.class);
+            }
     }
 
     public Animal findONe(int id) {

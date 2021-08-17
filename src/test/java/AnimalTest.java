@@ -10,20 +10,20 @@ class AnimalTest extends  DatabaseRule {
         Assertions.assertTrue(testAnimal instanceof Animal);
     }
     @Test
-    public void name_savedCorrectly_name(){
-        Animal testAnimal = new Animal("Antelope");
+    public void paramSave_nameSavedCorrectly_name(){
+        Animal testAnimal = new Animal("Antelope",false);
         Assertions.assertEquals("Antelope",testAnimal.getName());
     }
 
     @Test
     public void readONe_SaveAndReadSingleAnimalFromTestDb_Animal(){
-        Animal animal = new Animal("zebra");
+        Animal animal = new Animal("zebra",true);
         animal.save();
         int animalId = animal.getId();
         Assertions.assertEquals(animal, animal.findONe(animalId));
     }
     // Helper function
     public Animal getTestAnimal() {
-        return new Animal("testAnimal");
+        return new Animal("testAnimal",true);
     }
 }

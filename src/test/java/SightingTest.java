@@ -3,15 +3,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SitingTest extends DatabaseRule {
+class SightingTest extends DatabaseRule {
     @Test
     public void siting_returnInstanceSiting_siting(){
-        Siting siting = new Siting(1,"zone1","philip");
-        Assertions.assertTrue(siting instanceof Siting);
+        Sighting siting = new Sighting(1,"zone1","philip");
+        Assertions.assertTrue(siting instanceof Sighting);
     }
     @Test
     public void propertyInitializedCorrectly(){
-        Siting siting = new Siting(1,"zone2","Steve");
+        Sighting siting = new Sighting(1,"zone2","Steve");
 
         Assertions.assertEquals(1, siting.getAnimalId());
         Assertions.assertEquals("zone2", siting.getLocation());
@@ -20,8 +20,8 @@ class SitingTest extends DatabaseRule {
 
     @Test
     public void readOne_returnSitingSavedInTestData() {
-        Siting siting1 = new Siting(1,"zone1","philip");
-        Siting siting2 = new Siting(1,"zone1","philip");
+        Sighting siting1 = new Sighting(1,"zone1","philip");
+        Sighting siting2 = new Sighting(1,"zone1","philip");
         siting1.save();
         siting2.save();
 

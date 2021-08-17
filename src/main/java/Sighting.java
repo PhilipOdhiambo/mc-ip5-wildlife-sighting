@@ -1,13 +1,14 @@
 import com.google.common.base.Objects;
 import org.sql2o.Connection;
 
-public class Siting {
+public class Sighting {
     private int id;
     private int animalId;
     private String location;
     private String ranger;
+    public static final String DATABASE_TPE = "NonEndangered";
 
-    Siting(int animalId, String location, String ranger){
+    Sighting(int animalId, String location, String ranger){
         setAnimalId(animalId);
         setLocation(location);
         setRanger(ranger);
@@ -53,10 +54,10 @@ public class Siting {
 
     @Override
     public boolean equals(Object anotherSiting) {
-        if (!(anotherSiting instanceof Siting)) {
+        if (!(anotherSiting instanceof Sighting)) {
             return false;
         } else {
-            Siting newSiting = (Siting) anotherSiting;
+            Sighting newSiting = (Sighting) anotherSiting;
             return this.getAnimalId() == newSiting.getAnimalId()&&
                     this.location.equals(newSiting.location)&&
                     this.ranger.equals(newSiting.ranger);
@@ -66,23 +67,25 @@ public class Siting {
 
     // Create/save siting into the database
     public void save(){
-        String sql = "INSERT INTO sitings (animalId, location, ranger) VALUES (:animalId, :location, :ranger)";
+        String sql = "INSERT INTO sightings (animalId, location, ranger,type) VALUES (:animalid, :location, :ranger, :type)";
         try(Connection conn = DB.sql2o.open()){
             this.id = (int) conn.createQuery(sql)
-                    .addParameter("animalId",this.animalId)
+                    .addParameter("animalid",this.animalId)
                     .addParameter("location", this.location)
                     .addParameter("ranger",this.ranger)
+                    .addParameter("type",DATABASE_TPE)
                     .executeUpdate().getKey();
         }
 
     }
 
-    public Siting findONe(int id) {
+    public Sighting findONe(int id) {
         try (Connection con = DB.sql2o.open()) {
-            String sql = "SELECT * FROM sitings where id=:id";
-            Siting siting = con.createQuery(sql)
+            String sql = "SELECT * FROM sightings where id=:id";
+            Sighting siting = con.createQuery(sql)
                     .addParameter("id", id)
-                    .executeAndFetchFirst(Siting.class);
+                    .throwOnMappingFailure(false)
+                    .executeAndFetchFirst(Sighting.class);
             return siting;
         }
     }

@@ -44,20 +44,20 @@
                 </tbody>
             </table>
 
-            <form class="form border border-success p-4" action="/save_animal" method="POST">
+            <form class="form border border-success p-4" action="/save-animal" method="POST">
 
                 <h2>Enter new animal</h2>
 
                 <div class="form-feld mb">
                      <label for="new-name">Animal name</label>
-                <input class="form-control" id="new-name" type="text" placeholder="Ex. Black mountain Rhino">
+                <input class="form-control" id="new-name" type="text" name="new-name" placeholder="Ex. Black mountain Rhino">
                 </div>
 
                 <div class="form-field">
                 <label class="form-label" for="new-endangered">Is this animal endangered</label>
                 <select class="form-control" name="new-endangered" id="new-endangered">
-                    <option value="no">NO</option>
-                    <option value="yes">YES</option>
+                    <option value="false">NO</option>
+                    <option value="true">YES</option>
                 </select>
                 </div>
 
@@ -73,11 +73,11 @@
 
                 <div class="form-field">
                     <label class="form-label" for="update-name">Name: </label>
-                <input class="form-control" id="update-name" type="text" >
+                <input class="form-control" name="update-name" id="update-name" type="text" >
                 </div>
                 
                 <label class="form-label" for="update-endangered">Is this animal endangered</label>
-                <select class="form-control" name="update-endangered" id="update-endangered">
+                <select  class="form-control" name="update-endangered" id="update-endangered">
                     <option value="no">NO</option>
                     <option value="yes">Yes</option>
                 </select>

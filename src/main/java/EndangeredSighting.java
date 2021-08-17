@@ -1,6 +1,8 @@
-public class EndangeredAnimal extends Animal {
+public class EndangeredSighting extends Sighting {
     private String age;
     private String health;
+
+    public static final String DATABASE_TPE = "Endangered";
 
     // Health parameters
     public static final String HEALTHY = "Healthy";
@@ -15,12 +17,13 @@ public class EndangeredAnimal extends Animal {
 
     public final static String DATABASE_TYPE = "Endangered";
 
-    EndangeredAnimal(String name, String age, String health) {
-        super(name);
+    EndangeredSighting(int animalId, String age, String health, String location, String ranger) {
+        super(animalId,location,ranger);
         this.age = age;
         this.health = health;
 
     }
+
 }
 
 
