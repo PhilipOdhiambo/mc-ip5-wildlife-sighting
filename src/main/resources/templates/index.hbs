@@ -1,141 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
+{{#partial "content"}}
+<style>
+    form {
+        background-color: aquamarine;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wildlife_tracker</title>
+    .h2 {
+        text-align: center;
+    }
 
-    {{!-- Bootstrap --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    {{!-- Material design --}}
-    <link
-        href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-        rel="stylesheet">
-    <style>
-        .h2 {
-            text-align: center;
-        }
+    label {
+        font-size: 20px;
+        color: #000;
+    }
 
-        label {
-            font-size: 20px;
-            color: #000;
-        }
+    .form-control {
+        margin-bottom: 2rem;
+    }
 
-        .form-control {
-            margin-bottom: 2rem;
-        }
-        .data-label {
-            font-size: 20px;
-        }
-        .data {
-            font-weight: 700;
-        }
-    </style>
-</head>
+    .data-label {
+        font-size: 20px;
+    }
 
-<body>
+    .data {
+        font-weight: 700;
+    }
+</style>
+<section>
 
-    {{> nav.hbs}}
+    <div class="row container">
+        <div class="col-md-1"></div>
 
-    <section>
-        <div class="row container">
-            <div class="col-md-1"></div>
+        <div class="col-md-6">
+            <h2 class="text-center">Track an animal</h2>
+            <form action="/add-sighting" method="POST" class="border border-success p-4">
 
-            <div class="col-md-6">
-                <h2>Track an animal</h2>
-                <form action="/add-sighting" method="POST" class="border border-success p-4">
+                {{!-- id to be set by jquery when clicked on option --}}
+                <input hidden id="sighted-animal" name="sighted-animal" type="number" value="0">
 
-                    {{!-- id to be set by jquery when clicked on option --}}
-                    <input hidden id="sighted-animal" name="sighted-animal" type="number" value="0">
+                {{!-- Endangered property to be set by the selected option --}}
+                <input hidden id="isendangered" name="isendangered" type="text" value="">
 
-                    {{!-- Endangered property to be set by the selected option --}}
-                    <input hidden id="isendangered" name="isendangered" type="text" value="">
+                <label class="form-label" for="name-sited">Animal sighted: </label>
+                <select id="name-sited" class="form-control" name="animal">
+                    <option class="active-animal" value="0">---options---</option>
+                    {{#each animals}}
+                    <option value="{{id}}"> {{name}}</option>
+                    {{/each}}
+                </select>
 
-                    <label class="form-label" for="name-sited">Animal sighted: </label>
-                    <select id="name-sited" class="form-control" name="animal">
-                        <option class="active-animal" value="0">---options---</option>
-                        {{#each animals}}
-                        <option value="{{id}}"> {{name}}</option>
-                        {{/each}}
+                <div class="endangered bg-info p-2">
+
+                    <p>Give more details for this endangered animal.</p>
+
+                    <label class="form-label" for="health">Health Satatus</label>
+                    <select class="form-control" name="health" id="health">
+                        <option value="">---options---</option>
+                        <option value="healthy">Healthy</option>
+                        <option value="ill">Sickly</option>
+                        <option value="okay">Ok</option>
                     </select>
 
-                    <div class="endangered bg-info p-2">
-
-                        <p>Give more details for this endangered animal.</p>
-
-                        <label class="form-label" for="health">Health Satatus</label>
-                        <select class="form-control" name="health" id="health">
-                            <option value="">---options---</option>
-                            <option value="healthy">Healthy</option>
-                            <option value="ill">Sickly</option>
-                            <option value="okay">Ok</option>
-                        </select>
-
-                        <label class="form-label" for="age">Age category</label>
-                        <select class="form-control" name="age" id="age">
-                            <option value="">---options---</option>
-                            <option value="newborn">Newborn</option>
-                            <option value="young">Young</option>
-                            <option value="adult">Adult</option>
-                        </select>
-                    </div>
-
-                    <label class="form-label" for="location">Enter Zone</label>
-                    <select class="form-control" name="location" id="location">
-                        <option value="null">---options---</option>
-                        <option value="zone A">Zone A</option>
-                        <option value="zone A">Zone B</option>
-                        <option value="zone A">Zone C</option>
+                    <label class="form-label" for="age">Age category</label>
+                    <select class="form-control" name="age" id="age">
+                        <option value="">---options---</option>
+                        <option value="newborn">Newborn</option>
+                        <option value="young">Young</option>
+                        <option value="adult">Adult</option>
                     </select>
+                </div>
 
-                    <label class="form-label" for="ranger">Name of the Ranger</label>
-                    <select class="form-control" name="ranger" id="ranger">
-                        <option value="null">---options---</option>
-                        <option value="pater">Peter</option>
-                        <option value="joan">Joan</option>
-                        <option value="robert">Robert</option>
-                    </select>
+                <label class="form-label" for="location">Enter Zone</label>
+                <select class="form-control" name="location" id="location">
+                    <option value="null">---options---</option>
+                    <option value="zone A">Zone A</option>
+                    <option value="zone A">Zone B</option>
+                    <option value="zone A">Zone C</option>
+                </select>
 
-                    <button class="btn btn-success form-control">Submit</button>
+                <label class="form-label" for="ranger">Name of the Ranger</label>
+                <select class="form-control" name="ranger" id="ranger">
+                    <option value="null">---options---</option>
+                    <option value="pater">Peter</option>
+                    <option value="joan">Joan</option>
+                    <option value="robert">Robert</option>
+                </select>
 
-                </form>
+                <button class="btn btn-success form-control">Submit</button>
 
-            </div>
+            </form>
 
-            <div class="col-md-5">
-                <h2>Sightings Summary</h2>
-                <hr>
+        </div>
+
+        <div class="col-md-5">
+
+            <h2>Sightings Summary</h2>
+
+            <div class="border border-success p-3">
                 <p class="data-label">Endangered Animal: <span class="data">{{endangered}}</span></p>
                 <p>Non-Endangered Animals: <span class="data">{{non-endangered}}</span></p>
                 <hr>
                 <p>Total Animals Tracked: <span class="data">{{allSightings}}</span></p>
 
-                <a class="btn btn-success form-control border-bottom-2 border-primary" href="/animals">Add New Animal</a>
+                <a class="btn btn-success form-control border-bottom border-primary" href="/animals">Add New Animal</a>
+
 
             </div>
-            <div class="col-md-1"></div>
 
         </div>
-    </section>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-        crossorigin="anonymous"></script>
+        <div class="col-md-1"></div>
 
+    </div>
     <script>
         $(document).ready(function () {
-
             isEndangered();
-
 
             $("#name-sited").change(function () {
                 isEndangered();
             });
-
-
         })
 
         function isEndangered() {
@@ -165,6 +146,7 @@
         }
 
     </script>
-</body>
+</section>
+{{/partial}}
 
-</html>
+{{> layout.hbs}}
