@@ -53,6 +53,7 @@ public class Main {
             }
             Sighting nonEndangered = new Sighting(animalid,location,ranger);
             nonEndangered.save();
+            response.redirect("/");
             return null;
         });
 
