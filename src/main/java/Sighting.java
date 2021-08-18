@@ -1,6 +1,8 @@
 import com.google.common.base.Objects;
 import org.sql2o.Connection;
 
+import java.util.List;
+
 public class Sighting {
 
     public int id;
@@ -36,16 +38,34 @@ public class Sighting {
 
     }
 
+    public static List<Sighting> all() {
+        try(Connection conn = DB.sql2o.open()) {
+            String sql = "SELECT * FROM sightings";
+            return conn.createQuery(sql)
+                    .throwOnMappingFailure(false)
+                    .executeAndFetch(Sighting.class);
+        }
+    }
+
+
     //
 
     public Sighting findONe(int id) {
         try (Connection con = DB.sql2o.open()) {
             String sql = "SELECT * FROM sightings where id=:id";
-            Sighting siting = con.createQuery(sql)
+            return con.createQuery(sql)
                     .addParameter("id", id)
                     .throwOnMappingFailure(false)
                     .executeAndFetchFirst(Sighting.class);
-            return siting;
+        }
+    }
+
+    public static List<Sighting> allByType(String type) {
+        try(Connection conn = DB.sql2o.open()) {
+            String sql = "SELECT FROM sightings WHERE type = '" + type + "'";
+            return conn.createQuery(sql)
+                    .throwOnMappingFailure(false)
+                    .executeAndFetch(Sighting.class);
         }
     }
 

@@ -30,9 +30,18 @@ public class Main {
         /* ------------------------------Sighting routes--------------*/
         // Enter new sighting or update stats
         get("/",(request, response) -> {
+
             List<Animal> animals = Animal.all();
+            int totalSightings = Sighting.all().size();
+            int endangeredSightings = Sighting.allByType("endangered").size();
+            int normalSightings = Sighting.allByType("non-endangered").size();
+
             Map<String, Object> model = new HashMap<>();
             model.put("animals", animals);
+            model.put("endangered", endangeredSightings);
+            model.put("non-endangered", normalSightings);
+            model.put("allSightings", totalSightings);
+
             return new ModelAndView(model,"index.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -50,9 +59,11 @@ public class Main {
             if(isendangered) {
                 EndangeredSighting endangered = new EndangeredSighting(animalid,age,health,location,ranger);
                 endangered.save();
+            } else {
+
+                Sighting nonEndangered = new Sighting(animalid,location,ranger);
+                nonEndangered.save();
             }
-            Sighting nonEndangered = new Sighting(animalid,location,ranger);
-            nonEndangered.save();
             response.redirect("/");
             return null;
         });

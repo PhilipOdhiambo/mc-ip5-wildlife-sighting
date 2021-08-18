@@ -27,6 +27,12 @@
         .form-control {
             margin-bottom: 2rem;
         }
+        .data-label {
+            font-size: 20px;
+        }
+        .data {
+            font-weight: 700;
+        }
     </style>
 </head>
 
@@ -101,10 +107,13 @@
 
             <div class="col-md-5">
                 <h2>Sightings Summary</h2>
-                <h5>Total Animal Population:</h5>
-                <h5>Endangered Species:</h5>
+                <hr>
+                <p class="data-label">Endangered Animal: <span class="data">{{endangered}}</span></p>
+                <p>Non-Endangered Animals: <span class="data">{{non-endangered}}</span></p>
+                <hr>
+                <p>Total Animals Tracked: <span class="data">{{allSightings}}</span></p>
 
-                <a class="btn btn-success form-contril" href="/animals">Add New Animal</a>
+                <a class="btn btn-success form-control border-bottom-2 border-primary" href="/animals">Add New Animal</a>
 
             </div>
             <div class="col-md-1"></div>
