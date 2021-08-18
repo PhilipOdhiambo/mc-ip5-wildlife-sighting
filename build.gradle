@@ -21,8 +21,10 @@ dependencies {
     implementation 'org.sql2o:sql2o:1.6.0'
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation 'org.postgresql:postgresql:42.2.23'
+
+    implementation 'com.google.code.gson:gson:2.7'
 }
 
-//test {
-//    useJUnitPlatform()
-//}
+test {
+    useJUnitPlatform()
+}

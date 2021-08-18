@@ -11,7 +11,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     {{!-- Material design --}}
-    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+        rel="stylesheet">
     <style>
         .h2 {
             text-align: center;
@@ -37,37 +39,41 @@
             <div class="col-md-1"></div>
 
             <div class="col-md-6">
-                 <h2>Track an animal</h2>
+                <h2>Track an animal</h2>
                 <form action="/add-sighting" method="POST" class="border border-success p-4">
 
-                 {{!-- id to be set by jquery when clicked on option --}}
-                    <input id="sighted-animal" hidden type="number">
+                    {{!-- id to be set by jquery when clicked on option --}}
+                    <input hidden id="sighted-animal" name="sighted-animal" type="number" value="0">
+
+                    {{!-- Endangered property to be set by the selected option --}}
+                    <input hidden id="isendangered" name="isendangered" type="text" value="">
 
                     <label class="form-label" for="name-sited">Animal sighted: </label>
-                    <select class="form-control" name="animal" id="name-sited">
-                        <option value="null">---options---</option>
+                    <select id="name-sited" class="form-control" name="animal">
+                        <option class="active-animal" value="0">---options---</option>
                         {{#each animals}}
-                        <option id="ii" value="{{isendagered}}"> {{name}}</option>
+                        <option value="{{id}}"> {{name}}</option>
                         {{/each}}
                     </select>
-                    <div class="endangrered bg-info p-2">
+
+                    <div class="endangered bg-info p-2">
 
                         <p>Give more details for this endangered animal.</p>
 
                         <label class="form-label" for="health">Health Satatus</label>
                         <select class="form-control" name="health" id="health">
-                            <option value="null">---options---</option>
-                            <option value="sick">Sick</option>
+                            <option value="">---options---</option>
                             <option value="healthy">Healthy</option>
-                            <option value="fine">OK</option>
+                            <option value="ill">Sickly</option>
+                            <option value="okay">Ok</option>
                         </select>
 
                         <label class="form-label" for="age">Age category</label>
                         <select class="form-control" name="age" id="age">
-                            <option value="null">---options---</option>
-                            <option value="sick">Newborn</option>
-                            <option value="healthy">Young</option>
-                            <option value="fine">Adult</option>
+                            <option value="">---options---</option>
+                            <option value="newborn">Newborn</option>
+                            <option value="young">Young</option>
+                            <option value="adult">Adult</option>
                         </select>
                     </div>
 
@@ -112,12 +118,42 @@
 
     <script>
         $(document).ready(function () {
-            $(".endangrered").hide();
+
+            isEndangered();
+
+
             $("#name-sited").change(function () {
-                $(".endangrered").toggle(this.value);
+                isEndangered();
             });
+
+
         })
 
+        function isEndangered() {
+
+            if ($("#name-sited").val() == 0) {
+                $(".endangered").hide();
+                return;
+            }
+
+            var optionId = $("#name-sited").children(':selected').val();
+
+            $("#sighted-animal").val(optionId);
+
+            $.ajax(`/animals/${optionId}`, {
+
+                success: function (data, status, xhr) {
+                    const animal = JSON.parse(data);
+                    $("#isendangered").val(animal.isendagered);
+                    if (animal.isendagered) {
+                        $(".endangered").show()
+
+                    } else {
+                        $(".endangered").hide();
+                    }
+                }
+            });
+        }
 
     </script>
 </body>

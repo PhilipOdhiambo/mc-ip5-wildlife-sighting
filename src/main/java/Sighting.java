@@ -2,82 +2,41 @@ import com.google.common.base.Objects;
 import org.sql2o.Connection;
 
 public class Sighting {
-    private int id;
-    private int animalId;
-    private String location;
-    private String ranger;
-    public static final String DATABASE_TPE = "NonEndangered";
 
-    Sighting(int animalId, String location, String ranger){
-        setAnimalId(animalId);
-        setLocation(location);
-        setRanger(ranger);
+    public int id;
+    public int animalId;
+    public String location;
+    public String ranger;
+    public String type;
+    public String age;
+    public String health;
 
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getAnimalId() {
-        return animalId;
-    }
-
-    public void setAnimalId(int animalId) {
+    Sighting(int animalId, String location, String ranger) {
         this.animalId = animalId;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
         this.location = location;
-    }
-
-    public String getRanger() {
-        return ranger;
-    }
-
-    public void setRanger(String ranger) {
         this.ranger = ranger;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(this.animalId,this.id,this.ranger);
-    }
-
-    @Override
-    public boolean equals(Object anotherSiting) {
-        if (!(anotherSiting instanceof Sighting)) {
-            return false;
-        } else {
-            Sighting newSiting = (Sighting) anotherSiting;
-            return this.getAnimalId() == newSiting.getAnimalId()&&
-                    this.location.equals(newSiting.location)&&
-                    this.ranger.equals(newSiting.ranger);
-        }
 
     }
+
+
 
     // Create/save siting into the database
     public void save(){
-        String sql = "INSERT INTO sightings (animalId, location, ranger,type) VALUES (:animalid, :location, :ranger, :type)";
+        String sql = "INSERT INTO sightings (animalid, location, ranger,type) VALUES (:animalid, :location, :ranger, :type)";
         try(Connection conn = DB.sql2o.open()){
+
+            String ABSTRACT_TYPE = "non-endangered";
             this.id = (int) conn.createQuery(sql)
                     .addParameter("animalid",this.animalId)
                     .addParameter("location", this.location)
                     .addParameter("ranger",this.ranger)
-                    .addParameter("type",DATABASE_TPE)
+                    .addParameter("type", ABSTRACT_TYPE)
                     .executeUpdate().getKey();
         }
 
     }
+
+    //
 
     public Sighting findONe(int id) {
         try (Connection con = DB.sql2o.open()) {

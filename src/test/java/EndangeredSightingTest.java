@@ -11,21 +11,21 @@ class EndangeredSightingTest extends DatabaseRule {
     }
     @Test
     public void paramSave_propertyInitializedCorrectly_name(){
-        EndangeredSighting testAnimal = new EndangeredSighting(1,EndangeredSighting.YOUNG,EndangeredSighting.ILL,"zone A","philip");
-        Assertions.assertEquals(1,testAnimal.getAnimalId());
+        EndangeredSighting testAnimal = new EndangeredSighting(1,"young", "healthy","zone A","philip");
+        Assertions.assertEquals(1,testAnimal.animalId);
     }
 
     @Test
     public void readONe_SaveAndReadSingleAnimalFromTestDb_Animal(){
         EndangeredSighting animal = endangered();
         animal.save();
-        int animalId = animal.getId();
+        int animalId = animal.animalId;
         Assertions.assertEquals(animal, animal.findONe(animalId));
     }
 
     // Helper function
     public EndangeredSighting endangered() {
-        return new EndangeredSighting(1,EndangeredSighting.YOUNG,EndangeredSighting.ILL,"zone A","philip");
+        return  new EndangeredSighting(1,"young", "healthy","zone A","philip");
     }
 
 

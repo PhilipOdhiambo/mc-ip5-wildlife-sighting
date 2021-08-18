@@ -79,7 +79,7 @@ public class Animal {
             }
     }
 
-    public Animal findONe(int id) {
+    public static Animal findONe(int id) {
         try (Connection con = DB.sql2o.open()) {
             String sql = "SELECT * FROM animals where id=:id";
             Animal animal = con.createQuery(sql)

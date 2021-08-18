@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import static spark.Spark.*;
+import com.google.gson.Gson;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,6 +27,8 @@ public class Main {
 
         staticFileLocation("/public");
 
+        /* ------------------------------Sighting routes--------------*/
+        // Enter new sighting or update stats
         get("/",(request, response) -> {
             List<Animal> animals = Animal.all();
             Map<String, Object> model = new HashMap<>();
@@ -33,12 +36,41 @@ public class Main {
             return new ModelAndView(model,"index.hbs");
         }, new HandlebarsTemplateEngine());
 
+        // Post a sighting
+        post("/add-sighting",(request, response) -> {
+            int animalid = Integer.parseInt(request.queryParams("sighted-animal"));
+            String location = request.queryParams("location");
+            String ranger = request.queryParams("ranger");
+            String age = request.queryParams("age");
+            String health = request.queryParams("health");
+            String isss = request.queryParams("isendangered");
+            boolean isendangered = Boolean.parseBoolean(request.queryParams("isendangered"));
+            System.out.println(isendangered);
+
+            if(isendangered) {
+                EndangeredSighting endangered = new EndangeredSighting(animalid,age,health,location,ranger);
+                endangered.save();
+            }
+            Sighting nonEndangered = new Sighting(animalid,location,ranger);
+            nonEndangered.save();
+            return null;
+        });
+
+
+        /* -------------------------------------- Animal routes -------------*/
+
         get("/animals", (req,res) -> {
             List<Animal> animals = Animal.all();
             Map<String, Object> model = new HashMap<>();
             model.put("animals", animals);
             return new ModelAndView(model, "animals.hbs");
         }, new HandlebarsTemplateEngine());
+
+        get("/animals/:id", (req,res) -> {
+            int id = Integer.parseInt(req.params(":id"));
+            Animal animal = Animal.findONe(id);
+            return new Gson().toJson(animal);
+        });
 
         // Save new animal
         post("/save-animal",(req,res) -> {
